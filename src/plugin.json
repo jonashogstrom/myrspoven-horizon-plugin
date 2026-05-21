@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "panel",
+  "name": "Context Compression",
+  "id": "myrspoven-context-compression-panel",
+  "info": {
+    "keywords": ["panel", "timeline", "prometheus", "observability", "nonlinear"],
+    "description": "Focus and compressed-context timeline panel for passive operational dashboards.",
+    "author": {
+      "name": "myrspoven"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [],
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=12.3.0",
+    "plugins": []
+  }
+}

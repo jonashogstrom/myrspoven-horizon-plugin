@@ -1,0 +1,125 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "aggregationMode": "max",
+        "historicalBucketMinutes": 30,
+        "historicalDurationHours": 144,
+        "historicalWidthPercent": 15,
+        "lineWidth": 1.5,
+        "recentBucketMinutes": 1,
+        "recentDurationHours": 6,
+        "recentWidthPercent": 65,
+        "showLegend": true,
+        "showZoneBackgrounds": true,
+        "transitionBucketMinutes": 5,
+        "transitionDurationHours": 18,
+        "transitionWidthPercent": 20,
+        "yScaleMode": "log1p"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "raw_frame",
+          "rawFrameContent": "[{\"columns\":[{\"text\":\"Time\",\"type\":\"time\"},{\"text\":\"Ouman Write\",\"type\":\"number\"},{\"text\":\"WebPortHandler Read\",\"type\":\"number\"},{\"text\":\"Ecoguard2 Read\",\"type\":\"number\"}],\"rows\":[[1609459200000,128,0,0],[1609545600000,126,2,1],[1609632000000,132,1,0],[1609718400000,129,4,0],[1609804800000,136,3,6],[1609891200000,127,2,1],[1609977600000,131,5,3],[1609995600000,144,8,15],[1610002800000,140,6,4]]}]"
+        }
+      ],
+      "title": "Context Compression Demo",
+      "type": "myrspoven-context-compression-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "aggregationMode": "max",
+        "historicalBucketMinutes": 30,
+        "historicalDurationHours": 144,
+        "historicalWidthPercent": 15,
+        "lineWidth": 1.5,
+        "recentBucketMinutes": 1,
+        "recentDurationHours": 6,
+        "recentWidthPercent": 65,
+        "showLegend": true,
+        "showZoneBackgrounds": true,
+        "transitionBucketMinutes": 5,
+        "transitionDurationHours": 18,
+        "transitionWidthPercent": 20,
+        "yScaleMode": "log1p"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "no_data_points"
+        }
+      ],
+      "title": "No Data Demo",
+      "type": "myrspoven-context-compression-panel"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2021-01-01T00:00:00.000Z",
+    "to": "2021-01-07T08:00:00.000Z"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Provisioned context compression dashboard",
+  "uid": "context-compression-demo",
+  "version": 1,
+  "weekStart": ""
+}
