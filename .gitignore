@@ -47,12 +47,22 @@ ci/
 *.swo
 
 .eslintcache
+.cache/
 
 # Local environment
 .env
 .env.*
 !.env.example
 
+# Local/private data exports
+success-throughput-*.csv
+success-throughput-*.json
+*.prometheus.json
+*.local.csv
+*.local.json
+.grafana-testdata-*.go
+
 # OS files
 .DS_Store
 Thumbs.db
+secrets.txt

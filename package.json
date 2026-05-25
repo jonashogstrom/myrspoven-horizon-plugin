@@ -1,8 +1,11 @@
 {
-  "name": "myrspoven-context-compression-panel",
-  "version": "1.0.0",
+  "name": "myrspoven-horizon-panel",
+  "version": "0.0.1",
+  "description": "Grafana panel plugin for nonlinear context-compressed time series dashboards.",
+  "private": false,
   "scripts": {
     "build": "webpack -c ./.config/webpack/webpack.config.ts --env production",
+    "ci": "npm run typecheck && npm run lint && npm run test:ci && npm run build",
     "dev": "webpack -w -c ./.config/webpack/webpack.config.ts --env development",
     "test": "jest --watch --onlyChanged",
     "test:ci": "jest --passWithNoTests --maxWorkers 4",
@@ -15,6 +18,22 @@
   },
   "author": "myrspoven",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonashogstrom/myrspoven-horizon-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonashogstrom/myrspoven-horizon-plugin/issues"
+  },
+  "homepage": "https://github.com/jonashogstrom/myrspoven-horizon-plugin#readme",
+  "keywords": [
+    "grafana",
+    "grafana-panel",
+    "observability",
+    "prometheus",
+    "nonlinear-time",
+    "time-series"
+  ],
   "devDependencies": {
     "@grafana/eslint-config": "^9.0.0",
     "@grafana/plugin-e2e": "^3.5.1",
@@ -32,7 +51,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
-    "copy-webpack-plugin": "^13.0.0",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^7.1.0",
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.0",
@@ -67,11 +86,11 @@
   },
   "dependencies": {
     "@emotion/css": "11.10.6",
-    "@grafana/data": "12.4.2",
+    "@grafana/data": "^13.0.1",
     "@grafana/i18n": "12.4.2",
-    "@grafana/runtime": "12.4.2",
-    "@grafana/ui": "12.4.2",
+    "@grafana/runtime": "^8.2.7",
     "@grafana/schema": "12.4.2",
+    "@grafana/ui": "^8.2.7",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
   },

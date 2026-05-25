@@ -255,7 +255,7 @@ export const ContextCompressionPanel: React.FC<Props> = ({ options, data, width,
 
   return (
     <div
-      data-testid="context-compression-panel"
+      data-testid="horizon-panel"
       className={cx(
         styles.wrapper,
         css`
@@ -266,7 +266,7 @@ export const ContextCompressionPanel: React.FC<Props> = ({ options, data, width,
       )}
     >
       <svg
-        data-testid="context-compression-panel-svg"
+        data-testid="horizon-panel-svg"
         className={styles.svg}
         width={width}
         height={height}
@@ -345,7 +345,7 @@ export const ContextCompressionPanel: React.FC<Props> = ({ options, data, width,
 
       {showLegend && (
         <div
-          data-testid="context-compression-legend"
+          data-testid="horizon-legend"
           className={styles.legend}
           style={
             showBottomLegend

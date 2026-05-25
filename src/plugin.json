@@ -1,11 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
   "type": "panel",
-  "name": "Context Compression",
-  "id": "myrspoven-context-compression-panel",
+  "name": "Horizon",
+  "id": "myrspoven-horizon-panel",
   "info": {
     "keywords": ["panel", "timeline", "prometheus", "observability", "nonlinear"],
-    "description": "Focus and compressed-context timeline panel for passive operational dashboards.",
+    "description": "Nonlinear context-compressed time series panel for operational Grafana dashboards.",
     "author": {
       "name": "myrspoven"
     },
@@ -13,7 +13,16 @@
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "links": [],
+    "links": [
+      {
+        "name": "Repository",
+        "url": "https://github.com/jonashogstrom/myrspoven-horizon-plugin"
+      },
+      {
+        "name": "Issues",
+        "url": "https://github.com/jonashogstrom/myrspoven-horizon-plugin/issues"
+      }
+    ],
     "screenshots": [],
     "version": "%VERSION%",
     "updated": "%TODAY%"

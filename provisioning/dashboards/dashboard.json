@@ -59,7 +59,7 @@
         }
       ],
       "title": "Success Throughput 7d Dense Demo",
-      "type": "myrspoven-context-compression-panel"
+      "type": "myrspoven-horizon-panel"
     },
     {
       "datasource": {
@@ -93,7 +93,7 @@
         }
       ],
       "title": "No Data Demo",
-      "type": "myrspoven-context-compression-panel"
+      "type": "myrspoven-horizon-panel"
     }
   ],
   "refresh": "",
@@ -108,8 +108,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Provisioned context compression dashboard",
-  "uid": "context-compression-demo",
+  "title": "Provisioned Horizon dashboard",
+  "uid": "horizon-demo",
   "version": 1,
   "weekStart": ""
 }
