@@ -27,7 +27,7 @@ jobs:
       has-backend: ${{ steps.check-for-backend.outputs.has-backend }}
     env:
       GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
-      GRAFANA_SIGN_ROOT_URLS: https://grafana.myrspoven.se/
+      GRAFANA_SIGN_ROOT_URLS: https://grafana.myrspoven.se/,https://testgrafana.myrspoven.se/
     steps:
       - uses: actions/checkout@v6
         with:
