@@ -36,7 +36,7 @@ jobs:
         run: npm run build
 
       - name: Sign plugin
-        run: npm run sign -- --rootUrls https://grafana.myrspoven.se/,https://grafana.myrspoven.se/
+        run: npm run sign -- --rootUrls https://grafana.myrspoven.se/,https://testgrafana.myrspoven.se/
         env:
           GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
 
