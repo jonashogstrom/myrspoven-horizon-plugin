@@ -6,9 +6,7 @@ const now = Date.UTC(2021, 0, 8, 6);
 const hour = 60 * 60 * 1000;
 const options = {
   ...defaultOptions,
-  recentDurationHours: 6,
-  transitionDurationHours: 6,
-  historicalDurationHours: 6,
+  compressionFocusHours: 6,
 };
 const rangeStart = now - 18 * hour;
 

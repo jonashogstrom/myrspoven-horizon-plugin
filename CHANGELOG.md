@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+No changes yet.
+
+## [0.0.15] - 2026-05-27
+
 ### Added
 
 - Grafana field config support for per-series color overrides and thresholds.
@@ -14,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Y-axis lower bound option for zero-based or visible-minimum scaling.
 - Alternating day background bands across the nonlinear timeline.
 - Nonlinear grid markers and day bands now follow Grafana's selected time range.
+- Removed legacy transition/historical horizon options and renamed recent duration to compression focus.
+- Line interpolation options and bounded sliders for numeric graph style settings.
 
 ## [0.0.1] - 2026-05-25
 

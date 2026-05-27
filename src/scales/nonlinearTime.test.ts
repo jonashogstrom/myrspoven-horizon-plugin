@@ -3,10 +3,8 @@ import { defaultOptions } from '../types';
 
 describe('createNonlinearTimeScale', () => {
   const selectedRange = (to: number) => {
-    const totalHours =
-      defaultOptions.recentDurationHours + defaultOptions.transitionDurationHours + defaultOptions.historicalDurationHours;
     return {
-      from: to - totalHours * 60 * 60 * 1000,
+      from: to - 7 * 24 * 60 * 60 * 1000,
       to,
     };
   };

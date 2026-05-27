@@ -2,20 +2,20 @@ export type AggregationMode = 'max' | 'avg';
 export type ColorPalette = 'grafana' | 'classic' | 'cool' | 'warm';
 export type GradientMode = 'none' | 'opacity' | 'hue' | 'scheme';
 export type LegendPlacement = 'right' | 'bottom';
+export type LineInterpolation = 'linear' | 'smooth' | 'stepAfter' | 'stepBefore';
 export type LineStyle = 'solid' | 'dash' | 'dot';
 export type ThresholdDisplay = 'off' | 'lines';
 export type YAxisLowerBound = 'zero' | 'seriesMin';
 export type YScaleMode = 'linear' | 'log1p';
 
 export interface ContextCompressionOptions {
-  recentDurationHours: number;
-  transitionDurationHours: number;
-  historicalDurationHours: number;
+  compressionFocusHours: number;
   aggregationMode: AggregationMode;
   colorPalette: ColorPalette;
   fillOpacity: number;
   gradientMode: GradientMode;
   legendPlacement: LegendPlacement;
+  lineInterpolation: LineInterpolation;
   lineOpacity: number;
   lineStyle: LineStyle;
   thresholdDisplay: ThresholdDisplay;
@@ -26,14 +26,13 @@ export interface ContextCompressionOptions {
 }
 
 export const defaultOptions: ContextCompressionOptions = {
-  recentDurationHours: 6,
-  transitionDurationHours: 18,
-  historicalDurationHours: 144,
+  compressionFocusHours: 6,
   aggregationMode: 'max',
   colorPalette: 'grafana',
   fillOpacity: 0,
   gradientMode: 'none',
   legendPlacement: 'right',
+  lineInterpolation: 'stepAfter',
   lineOpacity: 0.95,
   lineStyle: 'solid',
   thresholdDisplay: 'off',

@@ -19,20 +19,15 @@ export const plugin = new PanelPlugin<ContextCompressionOptions>(ContextCompress
   })
   .setPanelOptions((builder) => {
     return builder
-      .addNumberInput({
-        path: 'recentDurationHours',
-        name: 'Recent duration (hours)',
-        defaultValue: defaultOptions.recentDurationHours,
-      })
-      .addNumberInput({
-        path: 'transitionDurationHours',
-        name: 'Transition duration (hours)',
-        defaultValue: defaultOptions.transitionDurationHours,
-      })
-      .addNumberInput({
-        path: 'historicalDurationHours',
-        name: 'Historical duration (hours)',
-        defaultValue: defaultOptions.historicalDurationHours,
+      .addSliderInput({
+        path: 'compressionFocusHours',
+        name: 'Compression focus (hours)',
+        defaultValue: defaultOptions.compressionFocusHours,
+        settings: {
+          min: 1,
+          max: 168,
+          step: 1,
+        },
       })
       .addRadio({
         path: 'aggregationMode',
@@ -51,10 +46,10 @@ export const plugin = new PanelPlugin<ContextCompressionOptions>(ContextCompress
           ],
         },
       })
-    .addRadio({
-      path: 'yScaleMode',
-      defaultValue: defaultOptions.yScaleMode,
-      name: 'Y-axis scale',
+      .addRadio({
+        path: 'yScaleMode',
+        defaultValue: defaultOptions.yScaleMode,
+        name: 'Y-axis scale',
         settings: {
           options: [
             {
@@ -65,26 +60,26 @@ export const plugin = new PanelPlugin<ContextCompressionOptions>(ContextCompress
               value: 'linear',
               label: 'Linear',
             },
-        ],
-      },
-    })
-    .addRadio({
-      path: 'yAxisLowerBound',
-      defaultValue: defaultOptions.yAxisLowerBound,
-      name: 'Y-axis lower bound',
-      settings: {
-        options: [
-          {
-            value: 'zero',
-            label: 'Zero',
-          },
-          {
-            value: 'seriesMin',
-            label: 'Series minimum',
-          },
-        ],
-      },
-    })
+          ],
+        },
+      })
+      .addRadio({
+        path: 'yAxisLowerBound',
+        defaultValue: defaultOptions.yAxisLowerBound,
+        name: 'Y-axis lower bound',
+        settings: {
+          options: [
+            {
+              value: 'zero',
+              label: 'Zero',
+            },
+            {
+              value: 'seriesMin',
+              label: 'Series minimum',
+            },
+          ],
+        },
+      })
       .addRadio({
         path: 'colorPalette',
         defaultValue: defaultOptions.colorPalette,
@@ -110,17 +105,22 @@ export const plugin = new PanelPlugin<ContextCompressionOptions>(ContextCompress
           ],
         },
       })
-      .addNumberInput({
+      .addSliderInput({
         path: 'lineWidth',
         name: 'Line width',
         defaultValue: defaultOptions.lineWidth,
+        settings: {
+          min: 0,
+          max: 10,
+          step: 0.5,
+        },
       })
-      .addNumberInput({
+      .addSliderInput({
         path: 'lineOpacity',
         name: 'Line opacity',
         defaultValue: defaultOptions.lineOpacity,
         settings: {
-          min: 0.1,
+          min: 0,
           max: 1,
           step: 0.05,
         },
@@ -156,6 +156,31 @@ export const plugin = new PanelPlugin<ContextCompressionOptions>(ContextCompress
             {
               value: 'scheme',
               label: 'Scheme',
+            },
+          ],
+        },
+      })
+      .addRadio({
+        path: 'lineInterpolation',
+        defaultValue: defaultOptions.lineInterpolation,
+        name: 'Line interpolation',
+        settings: {
+          options: [
+            {
+              value: 'linear',
+              label: 'Linear',
+            },
+            {
+              value: 'smooth',
+              label: 'Smooth',
+            },
+            {
+              value: 'stepAfter',
+              label: 'Step after',
+            },
+            {
+              value: 'stepBefore',
+              label: 'Step before',
             },
           ],
         },

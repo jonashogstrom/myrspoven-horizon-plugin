@@ -1,4 +1,4 @@
-import { DataFrame, Field, FieldType, PanelData, ThresholdsConfig } from '@grafana/data';
+import { DataFrame, Field, FieldColorModeId, FieldType, PanelData, ThresholdsConfig } from '@grafana/data';
 
 export interface TimeSeriesPoint {
   time: number;
@@ -66,7 +66,13 @@ function getSeriesName(frame: DataFrame, field: Field): string {
 }
 
 function getSeriesColor(field: Field): string | undefined {
-  return field.config?.color?.fixedColor;
+  const color = field.config?.color;
+
+  if (color?.mode === FieldColorModeId.Fixed && color.fixedColor) {
+    return color.fixedColor;
+  }
+
+  return undefined;
 }
 
 export function extractTimeSeries(data: PanelData): TimeSeries[] {

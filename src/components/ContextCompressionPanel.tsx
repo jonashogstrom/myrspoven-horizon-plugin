@@ -8,7 +8,14 @@ import { extractTimeSeries, TimeSeries, TimeSeriesPoint } from '../data/extractS
 import { createNonlinearTimeScale } from '../scales/nonlinearTime';
 import { createValueScale } from '../scales/valueScale';
 import { generateTemporalMarkers } from '../rendering/markers';
-import { ColorPalette, ContextCompressionOptions, GradientMode, LineStyle, resolveOptions } from '../types';
+import {
+  ColorPalette,
+  ContextCompressionOptions,
+  GradientMode,
+  LineInterpolation,
+  LineStyle,
+  resolveOptions,
+} from '../types';
 
 interface Props extends PanelProps<ContextCompressionOptions> {}
 
@@ -162,10 +169,11 @@ function getSeriesStats(points: TimeSeriesPoint[]): SeriesStats {
   };
 }
 
-function buildStepPath(
+function buildLinePath(
   points: TimeSeriesPoint[],
   x: (time: number) => number,
-  y: (value: number | null) => number
+  y: (value: number | null) => number,
+  interpolation: LineInterpolation
 ): string {
   if (points.length === 0) {
     return '';
@@ -173,10 +181,30 @@ function buildStepPath(
 
   const [first, ...rest] = points;
   const commands = [`M ${x(first.time).toFixed(2)} ${y(first.value).toFixed(2)}`];
+  let previous = first;
 
   for (const point of rest) {
-    commands.push(`H ${x(point.time).toFixed(2)}`);
-    commands.push(`V ${y(point.value).toFixed(2)}`);
+    const previousX = x(previous.time);
+    const previousY = y(previous.value);
+    const pointX = x(point.time);
+    const pointY = y(point.value);
+
+    if (interpolation === 'stepAfter') {
+      commands.push(`H ${pointX.toFixed(2)}`);
+      commands.push(`V ${pointY.toFixed(2)}`);
+    } else if (interpolation === 'stepBefore') {
+      commands.push(`V ${pointY.toFixed(2)}`);
+      commands.push(`H ${pointX.toFixed(2)}`);
+    } else if (interpolation === 'smooth') {
+      const controlOffset = (pointX - previousX) / 2;
+      commands.push(
+        `C ${(previousX + controlOffset).toFixed(2)} ${previousY.toFixed(2)} ${(pointX - controlOffset).toFixed(2)} ${pointY.toFixed(2)} ${pointX.toFixed(2)} ${pointY.toFixed(2)}`
+      );
+    } else {
+      commands.push(`L ${pointX.toFixed(2)} ${pointY.toFixed(2)}`);
+    }
+
+    previous = point;
   }
 
   return commands.join(' ');
@@ -186,9 +214,10 @@ function buildStepAreaPath(
   points: TimeSeriesPoint[],
   x: (time: number) => number,
   y: (value: number | null) => number,
-  baselineY: number
+  baselineY: number,
+  interpolation: LineInterpolation
 ): string {
-  const linePath = buildStepPath(points, x, y);
+  const linePath = buildLinePath(points, x, y, interpolation);
 
   if (!linePath) {
     return '';
@@ -248,7 +277,12 @@ function getGradientStops(
   ];
 }
 
-function getThresholdValue(threshold: Threshold, minValue: number, maxValue: number, mode?: ThresholdsMode): number | null {
+function getThresholdValue(
+  threshold: Threshold,
+  minValue: number,
+  maxValue: number,
+  mode?: ThresholdsMode
+): number | null {
   if (!Number.isFinite(threshold.value)) {
     return null;
   }
@@ -412,7 +446,7 @@ export const ContextCompressionPanel: React.FC<Props> = ({ options, data, width,
   const gridColor = theme.colors.border.weak;
   const textColor = theme.colors.text.secondary;
   const dayBands = getAlternatingDayBands(timeScale.domainStart, timeScale.domainEnd);
-  const lineOpacity = clamp(resolvedOptions.lineOpacity, 0.1, 1);
+  const lineOpacity = clamp(resolvedOptions.lineOpacity, 0, 1);
   const fillOpacity = clamp(resolvedOptions.fillOpacity, 0, 100) / 100;
   const lineDash = getLineDash(resolvedOptions.lineStyle, resolvedOptions.lineWidth);
   const shouldFill = fillOpacity > 0;
@@ -544,7 +578,13 @@ export const ContextCompressionPanel: React.FC<Props> = ({ options, data, width,
             visibleSeries.map((item) => {
               const seriesIndex = series.findIndex((seriesItem) => seriesItem.id === item.id);
               const color = item.color ?? getPaletteColor(resolvedOptions.colorPalette, seriesIndex);
-              const areaPath = buildStepAreaPath(item.points, x, y, margin.top + plotHeight);
+              const areaPath = buildStepAreaPath(
+                item.points,
+                x,
+                y,
+                margin.top + plotHeight,
+                resolvedOptions.lineInterpolation
+              );
               const gradientId = `horizon-fill-${getSafeId(item.id)}`;
 
               return areaPath ? (
@@ -561,7 +601,7 @@ export const ContextCompressionPanel: React.FC<Props> = ({ options, data, width,
           {visibleSeries.map((item) => {
             const seriesIndex = series.findIndex((seriesItem) => seriesItem.id === item.id);
             const color = item.color ?? getPaletteColor(resolvedOptions.colorPalette, seriesIndex);
-            const path = buildStepPath(item.points, x, y);
+            const path = buildLinePath(item.points, x, y, resolvedOptions.lineInterpolation);
 
             return path ? (
               <path

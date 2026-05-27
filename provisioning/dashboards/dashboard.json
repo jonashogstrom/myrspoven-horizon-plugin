@@ -36,15 +36,14 @@
       "id": 1,
       "options": {
         "aggregationMode": "avg",
-        "historicalDurationHours": 144,
         "lineWidth": 1.5,
-        "recentDurationHours": 6,
+        "compressionFocusHours": 6,
         "showLegend": true,
-        "transitionDurationHours": 18,
         "yScaleMode": "log1p",
         "colorPalette": "grafana",
         "legendPlacement": "right",
         "lineOpacity": 0.95,
+        "lineInterpolation": "stepAfter",
         "lineStyle": "solid"
       },
       "targets": [
@@ -75,11 +74,10 @@
       "id": 2,
       "options": {
         "aggregationMode": "max",
-        "historicalDurationHours": 144,
         "lineWidth": 1.5,
-        "recentDurationHours": 6,
+        "compressionFocusHours": 6,
         "showLegend": true,
-        "transitionDurationHours": 18,
+        "lineInterpolation": "stepAfter",
         "yScaleMode": "log1p"
       },
       "targets": [
