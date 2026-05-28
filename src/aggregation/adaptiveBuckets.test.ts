@@ -81,7 +81,7 @@ describe('aggregateSeries', () => {
     expect(oldBucketCount).toBeLessThan(recentBucketCount);
   });
 
-  it('keeps null-only buckets so null connection settings can create visible gaps', () => {
+  it('treats null-only buckets as zero values', () => {
     const scale = createNonlinearTimeScale({ ...options, aggregationMode: 'max' }, 6, rangeStart, now);
     const result = aggregateSeries(
       [
@@ -98,6 +98,30 @@ describe('aggregateSeries', () => {
       { ...options, aggregationMode: 'max' }
     );
 
-    expect(result[0].points.some((point) => point.value === null)).toBe(true);
+    expect(result[0].points.every((point) => point.value === 0)).toBe(true);
+  });
+
+  it('fills empty buckets between sparse samples with zero values', () => {
+    const scale = createNonlinearTimeScale({ ...options, aggregationMode: 'max' }, 60, rangeStart, now);
+    const result = aggregateSeries(
+      [
+        {
+          id: 'a',
+          name: 'A',
+          points: [
+            { time: now - 17 * hour, value: 5 },
+            { time: now - 1 * hour, value: 10 },
+          ],
+        },
+      ],
+      scale,
+      { ...options, aggregationMode: 'max' }
+    );
+
+    const values = result[0].points.map((point) => point.value);
+
+    expect(values[0]).toBe(5);
+    expect(values[values.length - 1]).toBe(10);
+    expect(values.slice(1, -1).some((value) => value === 0)).toBe(true);
   });
 });
