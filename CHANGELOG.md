@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 No changes yet.
 
+## [0.0.22] - 2026-05-29
+
+### Fixed
+
+- Replaced React `useId` usage with a React 17-compatible panel instance ID for Grafana 9.x compatibility.
+
 ## [0.0.21] - 2026-05-29
 
 ### Fixed

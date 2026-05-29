@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useId, useState } from 'react';
+import React, { KeyboardEvent, useState } from 'react';
 import { FieldColorModeId, getDisplayProcessor, PanelProps, Threshold, ThresholdsMode } from '@grafana/data';
 import { css, cx } from '@emotion/css';
 import { useStyles2, useTheme2 } from '@grafana/ui';
@@ -83,6 +83,7 @@ const palettes: Record<ColorPalette, string[]> = {
   cool: ['#5794f2', '#56d9d9', '#73bf69', '#8f7bd1', '#33a2a2', '#7eb6ff', '#a352cc', '#70dbed'],
   warm: ['#f2495c', '#ff9830', '#fade2a', '#ff7383', '#f2cc0c', '#efa6b0', '#e02f44', '#ffb357'],
 };
+let panelInstanceSequence = 0;
 
 const getStyles = () => ({
   wrapper: css`
@@ -797,7 +798,7 @@ function getSafeId(id: string): string {
 export const HorizonPanel: React.FC<Props> = ({ options, data, width, height, timeRange }) => {
   const theme = useTheme2();
   const styles = useStyles2(getStyles);
-  const panelInstanceId = getSafeId(useId());
+  const [panelInstanceId] = useState(() => `panel-${panelInstanceSequence++}`);
   const resolvedOptions = resolveOptions(options);
   const rawSeries = extractTimeSeries(data);
   const [hiddenSeries, setHiddenSeries] = useState<Set<string>>(() => new Set());
