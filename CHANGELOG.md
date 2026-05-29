@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 No changes yet.
 
+## [0.0.20] - 2026-05-29
+
+### Fixed
+
+- Gradient and fill style changes now update immediately while editing a panel.
+- Gradient hue and scheme modes now keep fixed color override series in the override color family.
+- Prometheus label values are now used as legend names before datasource display names.
+
 ## [0.0.19] - 2026-05-29
 
 ### Fixed

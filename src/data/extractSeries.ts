@@ -114,9 +114,21 @@ function toNumber(value: unknown): number | null {
 }
 
 function getSeriesName(frame: DataFrame, field: Field): string {
-  const configuredName = field.config?.displayName ?? field.config?.displayNameFromDS;
-  if (configuredName) {
-    return configuredName;
+  if (field.config?.displayName) {
+    return field.config.displayName;
+  }
+
+  const labelEntries = Object.entries(field.labels ?? {});
+  if (labelEntries.length === 1) {
+    return labelEntries[0][1];
+  }
+
+  if (labelEntries.length > 1) {
+    return labelEntries.map(([, value]) => value).join(' ');
+  }
+
+  if (field.config?.displayNameFromDS) {
+    return field.config.displayNameFromDS;
   }
 
   if (field.name && field.name !== 'Value') {

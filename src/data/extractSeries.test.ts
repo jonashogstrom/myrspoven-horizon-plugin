@@ -48,6 +48,30 @@ describe('extractTimeSeries', () => {
     expect(series[0].color).toBeUndefined();
   });
 
+  it('uses a single Prometheus label value as the series name before datasource display names', () => {
+    const data = panelDataWithColor(FieldColorModeId.PaletteClassic);
+    data.series[0].fields[1].labels = {
+      outcome: 'success',
+    };
+    data.series[0].fields[1].config.displayNameFromDS = 'prod_optimizer_process_count_w_outcome_total';
+
+    const series = extractTimeSeries(data);
+
+    expect(series[0].name).toBe('success');
+  });
+
+  it('uses all label values as the series name when a Prometheus field has multiple labels', () => {
+    const data = panelDataWithColor(FieldColorModeId.PaletteClassic);
+    data.series[0].fields[1].labels = {
+      environment: 'prod',
+      outcome: 'failed',
+    };
+
+    const series = extractTimeSeries(data);
+
+    expect(series[0].name).toBe('prod failed');
+  });
+
   it('preserves Grafana TimeSeries custom field config from imported panels', () => {
     const data = panelDataWithColor(FieldColorModeId.PaletteClassic);
     data.series[0].fields[1].config.custom = {

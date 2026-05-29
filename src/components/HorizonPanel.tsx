@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useMemo, useState } from 'react';
+import React, { KeyboardEvent, useState } from 'react';
 import { FieldColorModeId, getDisplayProcessor, PanelProps, Threshold, ThresholdsMode } from '@grafana/data';
 import { css, cx } from '@emotion/css';
 import { useStyles2, useTheme2 } from '@grafana/ui';
@@ -499,6 +499,10 @@ function getThemeColor(theme: Theme2, color: string): string {
 function getSeriesLineColor(item: TimeSeries, paletteName: ColorPalette, seriesIndex: number, theme: Theme2): string {
   const colorConfig = item.config?.color;
 
+  if (colorConfig?.mode === FieldColorModeId.Fixed && colorConfig.fixedColor) {
+    return getThemeColor(theme, colorConfig.fixedColor);
+  }
+
   if (colorConfig?.mode === FieldColorModeId.Shades) {
     const baseColor = getThemeColor(theme, colorConfig.fixedColor ?? getPaletteColor(paletteName, 0));
     return getShadeColor(baseColor, seriesIndex);
@@ -546,8 +550,8 @@ function getGradientStops(
   if (mode === 'hue') {
     if (hasColorOverride) {
       return [
-        { color: getShadeColor(color, 1), offset: '0%', opacity: fillOpacity },
-        { color, offset: '100%', opacity: Math.max(0.08, fillOpacity * 0.35) },
+        { color, offset: '0%', opacity: fillOpacity },
+        { color: getShadeColor(color, 1), offset: '100%', opacity: Math.max(0.08, fillOpacity * 0.35) },
       ];
     }
 
@@ -559,10 +563,10 @@ function getGradientStops(
 
   if (hasColorOverride) {
     return [
-      { color: getShadeColor(color, 3), offset: '0%', opacity: fillOpacity },
+      { color: getShadeColor(color, 1), offset: '0%', opacity: fillOpacity },
       { color, offset: '50%', opacity: fillOpacity * 0.65 },
       {
-        color: getShadeColor(color, 4),
+        color: getShadeColor(color, 2),
         offset: '100%',
         opacity: Math.max(0.06, fillOpacity * 0.25),
       },
@@ -794,7 +798,7 @@ export const HorizonPanel: React.FC<Props> = ({ options, data, width, height, ti
   const theme = useTheme2();
   const styles = useStyles2(getStyles);
   const resolvedOptions = resolveOptions(options);
-  const rawSeries = useMemo(() => extractTimeSeries(data), [data]);
+  const rawSeries = extractTimeSeries(data);
   const [hiddenSeries, setHiddenSeries] = useState<Set<string>>(() => new Set());
 
   if (rawSeries.length === 0) {
